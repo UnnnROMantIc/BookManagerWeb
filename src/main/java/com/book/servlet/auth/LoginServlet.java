@@ -1,9 +1,8 @@
-package com.book.servlet;
+package com.book.servlet.auth;
 
 import com.book.service.UserService;
 import com.book.service.impl.UserServiceImpl;
 import com.book.utils.ThymeleafUtil;
-import org.thymeleaf.Thymeleaf;
 import org.thymeleaf.context.Context;
 
 import javax.servlet.ServletException;
@@ -32,6 +31,11 @@ public class LoginServlet extends HttpServlet {
             context.setVariable("failure", true);
             req.getSession().removeAttribute("login-failure");
         }
+        //已经登录成功 就不要跳转回登录界面了 直接跳转到首页 和登录成功重定向一样样的
+        //缓存的问题 用生命周期clean来解决
+        if(req.getSession().getAttribute("user") != null) {
+            resp.sendRedirect("index");
+        }
         ThymeleafUtil.process("login.html", context, resp.getWriter());
 
     }
@@ -43,7 +47,8 @@ public class LoginServlet extends HttpServlet {
         String password = req.getParameter("password");
         String remember = req.getParameter("remember-me");
         if(service.auth(username,password, req.getSession())){
-            resp.getWriter().write("Login success");
+            //登录成功跳转
+            resp.sendRedirect("index");
         }else {
             //添加错误标识
             req.getSession().setAttribute("login-failure",new Object());
