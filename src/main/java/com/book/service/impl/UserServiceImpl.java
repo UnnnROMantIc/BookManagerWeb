@@ -11,7 +11,7 @@ import javax.servlet.http.HttpSession;
 public class UserServiceImpl implements UserService {
     @Override
     public boolean auth(String username, String password, HttpSession session) {
-        try (SqlSession sqlSession =  MybatisUtil.getSqlSession()){
+        try (SqlSession sqlSession =  MybatisUtil.getSession()){
             UserMapper mapper =  sqlSession.getMapper(UserMapper.class);
             User user = mapper.getUser(username,password);
             if(user == null) return false;

@@ -8,6 +8,7 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import java.io.IOException;
 
 public class MybatisUtil {
+
     private static SqlSessionFactory factory;
     static {
         try {
@@ -17,7 +18,7 @@ public class MybatisUtil {
         }
     }
 
-    public static SqlSession getSqlSession() {
-        return factory.openSession();
+    public static SqlSession getSession() {
+        return factory.openSession(true);
     }
 }

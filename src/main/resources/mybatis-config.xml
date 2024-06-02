@@ -15,6 +15,7 @@
         </environment>
     </environments>
     <mappers>
-        <mapper class="com.book.dao.UserMapper"/>
+<!--       注册包下所有的mapper-->
+        <package name="com.book.dao"/>
     </mappers>
 </configuration>
