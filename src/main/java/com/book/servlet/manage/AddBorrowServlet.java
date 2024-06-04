@@ -1,6 +1,5 @@
-package com.book.servlet.pages;
+package com.book.servlet.manage;
 
-import com.book.entity.User;
 import com.book.service.BookService;
 import com.book.service.impl.BookServiceImpl;
 import com.book.utils.ThymeleafUtil;
@@ -12,10 +11,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
 
-@WebServlet("/books")
-public class BookServlet extends HttpServlet {
+@WebServlet("/add-borrow")
+public class AddBorrowServlet extends HttpServlet {
 
     BookService service;
     @Override
@@ -23,18 +21,21 @@ public class BookServlet extends HttpServlet {
         service = new BookServiceImpl();
     }
 
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("text/html; charset=UTF-8");  // 设置内容类型和字符编码
         Context context = new Context();
-        User user = (User) req.getSession().getAttribute("user");
-        context.setVariable("nickname", user.getNickname());//map数据结构
+        context.setVariable("book_list", service.getActiveBookList());
+        context.setVariable("student_list", service.getStudentList());
+        ThymeleafUtil.process("add-borrow.html", context, resp.getWriter());
+    }
 
-        //把书籍信息加载到书籍管理界面 键值分开
-        context.setVariable("book_list", service.getBookList().keySet());
-        context.setVariable("book_list_status", new ArrayList<>( service.getBookList().values()));
-        ThymeleafUtil.process("books.html", context, resp.getWriter());
-
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        int sid = Integer.parseInt(req.getParameter("student"));
+        int bid = Integer.parseInt(req.getParameter("book"));
+        service.addBorrow(sid, bid);
+        resp.sendRedirect("index");
     }
 }
-
