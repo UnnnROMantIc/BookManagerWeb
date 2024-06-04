@@ -30,6 +30,9 @@ public class IndexServlet  extends HttpServlet {
         User user = (User) req.getSession().getAttribute("user");
         context.setVariable("nickname", user.getNickname());
         context.setVariable("borrow_list", service.getBorrowList());
+        //首页数量等 这样用service去写开销太大了，完全可以用mapper，这个效率太低了
+        context.setVariable("book_count", service.getBookList().size());
+        context.setVariable("student_count", service.getStudentList().size());
         ThymeleafUtil.process("index.html",context,resp.getWriter());
 
     }
