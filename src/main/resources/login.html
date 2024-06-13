@@ -26,13 +26,13 @@
             <div class="row align-items-center">
                 <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
                     <div class="ad-auth-img">
-                        <img src="static/picture/auth-img1.png" alt="">
+                        <img src="static/picture/img.png" alt="">
                     </div>
                 </div>
                 <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
                     <div class="ad-auth-content">
                         <form method="post" action="login">
-                            <h2><span class="primary">你好,</span>欢迎!</h2>
+                            <h2><span class="primary">欢迎使用</span>图书管理系统!</h2>
                             <p th:unless="${failure}">>请输入用户名和密码信息登录</p>
                             <p th:if="${failure}" style="color : red">您的用户名或密码输入有误</p>
                             <div class="ad-auth-form">
@@ -57,7 +57,6 @@
                                         <span>记住我</span>
                                     </label>
                                 </div>
-                                <a class="forgot-pws-btn" href="#">忘记密码?</a>
                             </div>
                             <div class="ad-auth-btn">
                                 <button  class="ad-btn ad-login-member">登录</button>
