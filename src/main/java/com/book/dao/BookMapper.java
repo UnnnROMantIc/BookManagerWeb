@@ -31,7 +31,7 @@ public interface BookMapper {
 
     @Delete("delete from book where bid = #{bid}")
     void deleteBook(int bid);
-    //test
+
     //使用反引号将 desc 列名包裹起来，这样可以确保它不被误认为是关键字
     @Insert("insert into book(title,`desc`,price) values(#{title}, #{desc}, #{price})")
     void addBook(@Param("title")String title, @Param("desc")String desc, @Param("price")double price);
